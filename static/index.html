@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>综合信息管理系统</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial; max-width: 1000px; margin: 20px auto; padding: 0 15px; color: #333; }
+        .tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .tab { padding: 10px 25px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: bold; }
+        .tab.active { border-bottom-color: #1890ff; color: #1890ff; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { border: 1px solid #e8e8e8; padding: 10px; text-align: left; }
+        th { background: #fafafa; font-weight: 600; }
+        tr:hover { background: #f5f7fa; }
+        .form-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .form-row label { min-width: 70px; font-weight: bold; }
+        .form-row input, .form-row textarea { flex: 1; padding: 6px 10px; border: 1px solid #d9d9d9; border-radius: 4px; min-width: 200px;}
+        button { padding: 7px 18px; border: none; border-radius: 4px; cursor: pointer; color: #fff; font-size: 13px; }
+        .btn-save { background: #1890ff; }
+        .btn-reset { background: #999; }
+        .btn-edit { background: #faad14; margin-right: 5px; }
+        .btn-del { background: #ff4d4f; }
+        h2 { margin-top: 0; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>📦 综合信息管理系统</h1>
+
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('product')">商品管理</div>
+        <div class="tab" onclick="switchTab('medicine')">药品管理</div>
+        <div class="tab" onclick="switchTab('user')">用户管理</div>
+    </div>
+
+    <!-- 商品面板 -->
+    <div id="panel-product" class="panel active">
+        <h2 id="title-product">新增商品</h2>
+        <input type="hidden" id="product-id">
+        <div class="form-row"><label>名称：</label><input id="p-name"></div>
+        <div class="form-row"><label>价格：</label><input type="number" step="0.01" min="0" id="p-price"></div>
+        <div class="form-row"><label>库存：</label><input type="number" min="0" id="p-stock" value="0"></div>
+        <div class="form-row"><label>描述：</label><textarea id="p-desc"></textarea></div>
+        <button class="btn-save" onclick="save('product')">保存</button>
+        <button class="btn-reset" onclick="reset('product')">重置</button>
+        <table><thead><tr><th>ID</th><th>名称</th><th>价格</th><th>库存</th><th>描述</th><th>操作</th></tr></thead><tbody id="tb-product"></tbody></table>
+    </div>
+
+    <!-- 药品的面板 -->
+    <div id="panel-medicine" class="panel">
+        <h2 id="title-medicine">新增药品</h2>
+        <input type="hidden" id="medicine-id">
+        <div class="form-row"><label>名称：</label><input id="m-name"></div>
+        <div class="form-row"><label>批号：</label><input id="m-batch"></div>
+        <div class="form-row"><label>有效期：</label><input type="date" id="m-expiry"></div>
+        <div class="form-row"><label>价格：</label><input type="number" step="0.01" min="0" id="m-price"></div>
+        <div class="form-row"><label>库存：</label><input type="number" min="0" id="m-stock" value="0"></div>
+        <div class="form-row"><label>生产厂商：</label><input id="m-manufacturer"></div>
+        <button class="btn-save" onclick="save('medicine')">保存</button>
+        <button class="btn-reset" onclick="reset('medicine')">重置</button>
+        <table><thead><tr><th>ID</th><th>名称</th><th>批号</th><th>有效期</th><th>价格</th><th>库存</th><th>生产厂商</th><th>操作</th></tr></thead><tbody id="tb-medicine"></tbody></table>
+    </div>
+
+    <!-- 用户面板 -->
+    <div id="panel-user" class="panel">
+        <h2 id="title-user">新增用户</h2>
+        <input type="hidden" id="user-id">
+        <div class="form-row"><label>用户名：</label><input id="u-username"></div>
+        <div class="form-row"><label>密码：</label><input type="password" id="u-password" placeholder="编辑时留空则不修改"></div>
+        <div class="form-row">
+           <label>角色：</label>
+            <select id="u-role" style="flex:1; padding:6px 10px; border:1px solid #d9d9d9; border-radius:4px; min-width:200px;">
+                <option value="admin">系统管理员</option>
+                <option value="user" selected>用户</option>
+                <option value="merchant">商户</option>
+                <option value="supplier">供应商</option>
+            </select>
+        </div>
+        <button class="btn-save" onclick="save('user')">保存</button>
+        <button class="btn-reset" onclick="reset('user')">重置</button>
+        <table><thead><tr><th>ID</th><th>用户名</th><th>角色</th><th>操作</th></tr></thead><tbody id="tb-user"></tbody></table>
+    </div>
+
+<script>
+// 【关键】使用相对路径，彻底解决跨域和端口变更问题
+const API = { product: '/api/products', medicine: '/api/medicines', user: '/api/users' };
+
+// 字段映射配置
+const FIELDS = {
+    product: { id:'product-id', title:'title-product', tb:'tb-product',
+               fields: {name:'p-name', price:'p-price', stock:'p-stock', description:'p-desc'} },
+    medicine: { id:'medicine-id', title:'title-medicine', tb:'tb-medicine',
+                fields: {name:'m-name', batch_no:'m-batch', expiry_date:'m-expiry', price:'m-price', stock:'m-stock',manufacturer: 'm-manufacturer'} },
+    user:     { id:'user-id', title:'title-user', tb:'tb-user',
+                fields: {username:'u-username', password:'u-password', role:'u-role'} }
+};
+
+const ROLE_MAP = {
+    'admin': '系统管理员',
+    'user': '用户',
+    'merchant': '商户',
+    'supplier': '供应商'
+};
+
+function switchTab(type) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['product','medicine','user'][i]===type));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`panel-${type}`).classList.add('active');
+    load(type);
+}
+
+async function load(type) {
+    const res = await fetch(API[type]);
+    const json = await res.json();
+    const tbody = document.getElementById(FIELDS[type].tb);
+    tbody.innerHTML = '';
+    (json.data || []).forEach(item => {
+        let cols = Object.keys(FIELDS[type].fields).map(k => `<td>${item[k] ?? ''}</td>`).join('');
+        if (type === 'product') {
+            cols = `<td>${item.id}</td><td>${item.name ?? ''}</td><td>${item.price ?? ''}</td><td>${item.stock ?? ''}</td><td>${item.description ?? ''}</td>`;
+        } else if (type === 'medicine') {
+            cols = `<td>${item.id}</td><td>${item.name ?? ''}</td><td>${item.batch_no ?? ''}</td><td>${item.expiry_date ?? ''}</td><td>${item.price ?? ''}</td><td>${item.stock ?? ''}</td><td>${item.manufacturer ?? ''}</td>`;
+        } else if (type === 'user') {
+            cols = `<td>${item.id}</td><td>${item.username ?? ''}</td><td>${item.role ?? ''}</td>`;
+        }
+        tbody.innerHTML += `<tr>${cols}<td>
+            <button class="btn-edit" onclick="edit('${type}',${item.id})">编辑</button>
+            <button class="btn-del" onclick="del('${type}',${item.id})">删除</button>
+        </td></tr>`;
+    });
+}
+
+async function save(type) {
+    const cfg = FIELDS[type];
+    const id = document.getElementById(cfg.id).value;
+    const data = {};
+    for(let [k, elId] of Object.entries(cfg.fields)) {
+        data[k] = document.getElementById(elId).value;
+    }
+    // 基础校验
+    if(!data.name && !data.username) return alert('名称/用户名不能为空');
+    if (type === 'product' || type === 'medicine') {
+        if (parseFloat(data.price) < 0) return alert('价格不能为负数');
+        if (parseInt(data.stock) < 0) return alert('库存不能为负数');
+    }
+
+    const opts = { method: id ? 'PUT' : 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) };
+    const url = id ? `${API[type]}/${id}` : API[type];
+    const res = await fetch(url, opts);
+    const result = await res.json();
+    alert(result.message);
+    reset(type);
+    load(type);
+}
+
+async function edit(type, id) {
+    const res = await fetch(`${API[type]}/${id}`);
+    const item = (await res.json()).data;
+    const cfg = FIELDS[type];
+    document.getElementById(cfg.id).value = item.id;
+    for(let [k, elId] of Object.entries(cfg.fields)) {
+        if(k !== 'password') document.getElementById(elId).value = item[k] ?? '';
+    }
+    document.getElementById(cfg.title).textContent = `编辑${type === 'product' ? '商品' : type === 'medicine' ? '药品' : '用户'}`;
+}
+
+async function del(type, id) {
+    if(!confirm('确定删除吗？')) return;
+    const res = await fetch(`${API[type]}/${id}`, {method:'DELETE'});
+    alert((await res.json()).message);
+    load(type);
+}
+
+function reset(type) {
+    const cfg = FIELDS[type];
+    document.getElementById(cfg.id).value = '';
+    for(let elId of Object.values(cfg.fields)){
+        const el = document.getElementById(elId);
+        if (el.tagName === 'SELECT') {
+            // 下拉框重置为默认选中项（用户）
+            el.value = 'user';
+        } else {
+            el.value = '';
+        }
+    }
+    const names = {product:'商品', medicine:'药品', user:'用户'};
+    document.getElementById(cfg.title).textContent = `新增${names[type]}`;
+}
+
+window.onload = () => load('product');
+</script>
+</body>
+</html>

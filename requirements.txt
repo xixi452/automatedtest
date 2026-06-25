@@ -1,0 +1,15 @@
+# === 实验二：Flask 后端依赖 ===
+flask
+flask-sqlalchemy
+flask-cors
+flask-migrate
+pymysql
+
+# === 实验三/四：Unittest & Selenium UI 测试依赖 ===
+selenium
+unittest-xml-reporting
+
+# === 实验五：Robot Framework 接口测试依赖 ===
+robotframework
+robotframework-requests
+robotframework-jsonlibrary

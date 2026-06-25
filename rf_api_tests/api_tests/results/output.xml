@@ -1,0 +1,2312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.2 on win32)" generated="2026-06-23T00:04:27.711517" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="E:\rjcs\automatedtest\api_tests\tests">
+<suite id="s1-s1" name="02 User Api" source="E:\rjcs\automatedtest\api_tests\tests\02_user_api.robot">
+<kw name="Create API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:27.928409" level="INFO">Creating Session using : alias=api, url=http://localhost:8081, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2026-06-23T00:04:27.928438" level="DEBUG">Creating session: api</msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=${FALSE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-06-23T00:04:27.928213" elapsed="0.000339"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:27.927891" elapsed="0.000720"/>
+</kw>
+<test id="s1-s1-t1" name="TC_USER_01_新增用户_成功" line="24">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:27.929471" level="INFO">${body} = {'username': 'rf_test_user', 'password': 'Test@123456', 'role': 'merchant'}</msg>
+<var>${body}</var>
+<arg>username=${TEST_USERNAME}</arg>
+<arg>password=${TEST_PASSWORD}</arg>
+<arg>role=merchant</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:27.929135" elapsed="0.000353"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:27.933789" level="DEBUG">Starting new HTTP connection (1): localhost:8081</msg>
+<msg time="2026-06-23T00:04:30.217998" level="DEBUG">http://localhost:8081 "POST /api/users HTTP/1.1" 201 145</msg>
+<msg time="2026-06-23T00:04:30.218295" level="INFO">POST Request : url=http://localhost:8081/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '75', 'Content-Type': 'application/json'} 
+ body=b'{"username": "rf_test_user", "password": "Test@123456", "role": "merchant"}' 
+ </msg>
+<msg time="2026-06-23T00:04:30.218356" level="INFO">POST Response : url=http://localhost:8081/api/users 
+ status=201, reason=CREATED 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:30 GMT', 'Content-Type': 'application/json', 'Content-Length': '145', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 201,
+  "data": {
+    "id": 86,
+    "role": "merchant",
+    "username": "rf_test_user"
+  },
+  "message": "\u521b\u5efa\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:30.218441" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:27.929953" elapsed="2.288503"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:30.218503" elapsed="0.000035"/>
+</return>
+<msg time="2026-06-23T00:04:30.218622" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>/users</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:27.929685" elapsed="2.288949"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.219981" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.219145" elapsed="0.000876"/>
+</kw>
+<arg>${resp}</arg>
+<arg>201</arg>
+<status status="PASS" start="2026-06-23T00:04:30.218971" elapsed="0.001088"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.220704" level="INFO">${json} = {'code': 201, 'data': {'id': 86, 'role': 'merchant', 'username': 'rf_test_user'}, 'message': '创建成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.220353" elapsed="0.000367"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.221110" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.220775" elapsed="0.000364"/>
+</kw>
+<arg>${resp}</arg>
+<arg>201</arg>
+<status status="PASS" start="2026-06-23T00:04:30.220202" elapsed="0.000969"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.221870" level="INFO">${json} = {'code': 201, 'data': {'id': 86, 'role': 'merchant', 'username': 'rf_test_user'}, 'message': '创建成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.221562" elapsed="0.000324"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:30.221917" elapsed="0.000025"/>
+</return>
+<msg time="2026-06-23T00:04:30.222010" level="INFO">${data} = {'id': 86, 'role': 'merchant', 'username': 'rf_test_user'}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:30.221423" elapsed="0.000599"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.222605" level="INFO">${CREATED_USER_ID} = 86</msg>
+<arg>${CREATED_USER_ID}</arg>
+<arg>${data}[id]</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.222210" elapsed="0.000417"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:04:30.222943" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[role]</arg>
+<arg>merchant</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.222795" elapsed="0.000179"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:27.928697" elapsed="2.294387"/>
+</test>
+<test id="s1-s1-t2" name="TC_USER_02_查询用户列表_包含新增用户" line="36">
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:30.225591" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:32.259570" level="DEBUG">http://localhost:8081 "GET /api/users HTTP/1.1" 200 362</msg>
+<msg time="2026-06-23T00:04:32.259801" level="INFO">GET Request : url=http://localhost:8081/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:32.259850" level="INFO">GET Response : url=http://localhost:8081/api/users 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:32 GMT', 'Content-Type': 'application/json', 'Content-Length': '362', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "role": "user",
+      "username": "435"
+    },
+    {
+      "id": 80,
+      "role": "merchant",
+      "username": "e2e_merchant"
+    },
+    {
+      "id": 84,
+      "role": "admin",
+      "username": "admin"
+    },
+    {
+      "id": 86,
+      "role": "merchant",
+      "username": "rf_test_user"
+    }
+  ]
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:32.259964" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:30.224804" elapsed="2.035178"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:32.260029" elapsed="0.000025"/>
+</return>
+<msg time="2026-06-23T00:04:32.260130" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/users</arg>
+<status status="PASS" start="2026-06-23T00:04:30.223926" elapsed="2.036217"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:32.262966" level="INFO">${json} = {'code': 200, 'data': [{'id': 1, 'role': 'user', 'username': '435'}, {'id': 80, 'role': 'merchant', 'username': 'e2e_merchant'}, {'id': 84, 'role': 'admin', 'username': 'admin'}, {'id': 86, 'role': 'm...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.262605" elapsed="0.000377"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:32.263392" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.263042" elapsed="0.000380"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:32.262419" elapsed="0.001038"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:32.264230" level="INFO">${json} = {'code': 200, 'data': [{'id': 1, 'role': 'user', 'username': '435'}, {'id': 80, 'role': 'merchant', 'username': 'e2e_merchant'}, {'id': 84, 'role': 'admin', 'username': 'admin'}, {'id': 86, 'role': 'm...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.263897" elapsed="0.000354"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:32.264280" elapsed="0.000021"/>
+</return>
+<msg time="2026-06-23T00:04:32.264366" level="INFO">${data} = [{'id': 1, 'role': 'user', 'username': '435'}, {'id': 80, 'role': 'merchant', 'username': 'e2e_merchant'}, {'id': 84, 'role': 'admin', 'username': 'admin'}, {'id': 86, 'role': 'merchant', 'username': ...</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:32.263748" elapsed="0.000631"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-06-23T00:04:32.264913" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>any(u['username']=='${TEST_USERNAME}' for u in $data)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.264549" elapsed="0.000381"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.265071" elapsed="0.000168"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:30.223296" elapsed="2.042081"/>
+</test>
+<test id="s1-s1-t3" name="TC_USER_03_编辑用户角色" line="43">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:32.266459" level="INFO">${body} = {'role': 'supplier'}</msg>
+<var>${body}</var>
+<arg>role=supplier</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.266292" elapsed="0.000182"/>
+</kw>
+<kw name="PUT API" owner="base">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:32.282668" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:34.325231" level="DEBUG">http://localhost:8081 "PUT /api/users/86 HTTP/1.1" 200 145</msg>
+<msg time="2026-06-23T00:04:34.325452" level="INFO">PUT Request : url=http://localhost:8081/api/users/86 
+ path_url=/api/users/86 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '20', 'Content-Type': 'application/json'} 
+ body=b'{"role": "supplier"}' 
+ </msg>
+<msg time="2026-06-23T00:04:34.325494" level="INFO">PUT Response : url=http://localhost:8081/api/users/86 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:34 GMT', 'Content-Type': 'application/json', 'Content-Length': '145', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": {
+    "id": 86,
+    "role": "supplier",
+    "username": "rf_test_user"
+  },
+  "message": "\u66f4\u65b0\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:34.325569" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:32.281653" elapsed="2.043929"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:34.325630" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:04:34.325780" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/users/${CREATED_USER_ID}</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:32.281420" elapsed="2.044373"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:34.326893" level="INFO">${json} = {'code': 200, 'data': {'id': 86, 'role': 'supplier', 'username': 'rf_test_user'}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.326362" elapsed="0.000569"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:34.327410" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.327004" elapsed="0.000438"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:34.326151" elapsed="0.001328"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:34.328367" level="INFO">${json} = {'code': 200, 'data': {'id': 86, 'role': 'supplier', 'username': 'rf_test_user'}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.328052" elapsed="0.000331"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:34.328413" elapsed="0.000019"/>
+</return>
+<msg time="2026-06-23T00:04:34.328501" level="INFO">${data} = {'id': 86, 'role': 'supplier', 'username': 'rf_test_user'}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:34.327878" elapsed="0.000635"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:04:34.328904" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[role]</arg>
+<arg>supplier</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.328664" elapsed="0.000274"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:32.265930" elapsed="2.063321"/>
+</test>
+<test id="s1-s1-t4" name="TC_USER_04_非法角色_创建失败" line="50">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:34.332138" level="INFO">${body} = {'username': 'bad_role_user', 'password': 'Test@123456', 'role': 'hacker'}</msg>
+<var>${body}</var>
+<arg>username=bad_role_user</arg>
+<arg>password=${TEST_PASSWORD}</arg>
+<arg>role=hacker</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.331925" elapsed="0.000230"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:34.333284" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:36.371419" level="DEBUG">http://localhost:8081 "POST /api/users HTTP/1.1" 400 126</msg>
+<msg time="2026-06-23T00:04:36.371675" level="INFO">POST Request : url=http://localhost:8081/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '74', 'Content-Type': 'application/json'} 
+ body=b'{"username": "bad_role_user", "password": "Test@123456", "role": "hacker"}' 
+ </msg>
+<msg time="2026-06-23T00:04:36.371718" level="INFO">POST Response : url=http://localhost:8081/api/users 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:36 GMT', 'Content-Type': 'application/json', 'Content-Length': '126', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u975e\u6cd5\u89d2\u8272\uff0c\u5141\u8bb8\u503c: ['admin', 'user', 'merchant', 'supplier']"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:36.371793" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:34.332491" elapsed="2.039315"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:36.371858" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:04:36.371966" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/users</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:34.332340" elapsed="2.039638"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:36.373305" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:36.372463" elapsed="0.000892"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:36.372251" elapsed="0.001145"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:36.374313" level="INFO">${json} = {'code': 400, 'message': "非法角色，允许值: ['admin', 'user', 'merchant', 'supplier']"}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:36.373935" elapsed="0.000396"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:36.374771" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:36.374392" elapsed="0.000411"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:36.373732" elapsed="0.001106"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:34.331426" elapsed="2.043564"/>
+</test>
+<test id="s1-s1-t5" name="TC_USER_05_缺少必填字段_创建失败" line="59">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:36.375892" level="INFO">${body} = {'username': 'no_pwd_user'}</msg>
+<var>${body}</var>
+<arg>username=no_pwd_user</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:36.375707" elapsed="0.000223"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:36.377168" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:38.409039" level="DEBUG">http://localhost:8081 "POST /api/users HTTP/1.1" 400 85</msg>
+<msg time="2026-06-23T00:04:38.409271" level="INFO">POST Request : url=http://localhost:8081/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '27', 'Content-Type': 'application/json'} 
+ body=b'{"username": "no_pwd_user"}' 
+ </msg>
+<msg time="2026-06-23T00:04:38.409312" level="INFO">POST Response : url=http://localhost:8081/api/users 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:38 GMT', 'Content-Type': 'application/json', 'Content-Length': '85', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u5fc5\u586b\u5b57\u6bb5: ['username', 'password']"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:38.409391" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:36.376253" elapsed="2.033152"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:38.409452" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:04:38.409559" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/users</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:36.376092" elapsed="2.033480"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:38.410768" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:38.410109" elapsed="0.000696"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:38.409916" elapsed="0.000928"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:36.375241" elapsed="2.035711"/>
+</test>
+<test id="s1-s1-t6" name="TC_USER_06_删除用户_成功" line="64">
+<kw name="DELETE API" owner="base">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:38.412670" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:40.462650" level="DEBUG">http://localhost:8081 "DELETE /api/users/86 HTTP/1.1" 200 59</msg>
+<msg time="2026-06-23T00:04:40.462874" level="INFO">DELETE Request : url=http://localhost:8081/api/users/86 
+ path_url=/api/users/86 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:40.463024" level="INFO">DELETE Response : url=http://localhost:8081/api/users/86 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:40 GMT', 'Content-Type': 'application/json', 'Content-Length': '59', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "message": "\u5220\u9664\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:40.463109" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:38.411990" elapsed="2.051133"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:40.463170" elapsed="0.000035"/>
+</return>
+<msg time="2026-06-23T00:04:40.463285" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/users/${CREATED_USER_ID}</arg>
+<status status="PASS" start="2026-06-23T00:04:38.411837" elapsed="2.051461"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:40.465977" level="INFO">${json} = {'code': 200, 'message': '删除成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:40.465538" elapsed="0.000459"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:40.466436" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:40.466064" elapsed="0.000416"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:40.465329" elapsed="0.001187"/>
+</kw>
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:40.467755" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:42.491342" level="DEBUG">http://localhost:8081 "GET /api/users/86 HTTP/1.1" 404 53</msg>
+<msg time="2026-06-23T00:04:42.491563" level="INFO">GET Request : url=http://localhost:8081/api/users/86 
+ path_url=/api/users/86 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:42.491606" level="INFO">GET Response : url=http://localhost:8081/api/users/86 
+ status=404, reason=NOT FOUND 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:42 GMT', 'Content-Type': 'application/json', 'Content-Length': '53', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 404,
+  "message": "\u672a\u627e\u5230"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:42.491703" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:40.467061" elapsed="2.024656"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:42.491771" elapsed="0.000033"/>
+</return>
+<msg time="2026-06-23T00:04:42.491890" level="INFO">${resp2} = &lt;Response [404]&gt;</msg>
+<var>${resp2}</var>
+<arg>/users/${CREATED_USER_ID}</arg>
+<status status="PASS" start="2026-06-23T00:04:40.466721" elapsed="2.025182"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:42.494046" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:42.492309" elapsed="0.001778"/>
+</kw>
+<arg>${resp2}</arg>
+<arg>404</arg>
+<status status="PASS" start="2026-06-23T00:04:42.492114" elapsed="0.002018"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:38.411375" elapsed="4.082897"/>
+</test>
+<kw name="Run Keywords" owner="BuiltIn" type="TEARDOWN">
+<kw name="Delete Test User">
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:42.496736" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:44.523904" level="DEBUG">http://localhost:8081 "GET /api/users HTTP/1.1" 200 274</msg>
+<msg time="2026-06-23T00:04:44.524140" level="INFO">GET Request : url=http://localhost:8081/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:44.524183" level="INFO">GET Response : url=http://localhost:8081/api/users 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:44 GMT', 'Content-Type': 'application/json', 'Content-Length': '274', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "role": "user",
+      "username": "435"
+    },
+    {
+      "id": 80,
+      "role": "merchant",
+      "username": "e2e_merchant"
+    },
+    {
+      "id": 84,
+      "role": "admin",
+      "username": "admin"
+    }
+  ]
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:44.524264" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:42.495649" elapsed="2.028630"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:44.524326" elapsed="0.000057"/>
+</return>
+<msg time="2026-06-23T00:04:44.524474" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/users</arg>
+<status status="PASS" start="2026-06-23T00:04:42.495386" elapsed="2.029101"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:44.524576" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2026-06-23T00:04:44.524958" level="INFO">To JSON using : content={
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "role": "user",
+      "username": "435"
+    },
+    {
+      "id": 80,
+      "role": "merchant",
+      "username": "e2e_merchant"
+    },
+    {
+      "id": 84,
+      "role": "admin",
+      "username": "admin"
+    }
+  ]
+}
+ </msg>
+<msg time="2026-06-23T00:04:44.524976" level="INFO">To JSON using : pretty_print=False </msg>
+<msg time="2026-06-23T00:04:44.525016" level="INFO">${json} = {'code': 200, 'data': [{'id': 1, 'role': 'user', 'username': '435'}, {'id': 80, 'role': 'merchant', 'username': 'e2e_merchant'}, {'id': 84, 'role': 'admin', 'username': 'admin'}]}</msg>
+<var>${json}</var>
+<arg>${resp.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="PASS" start="2026-06-23T00:04:44.524560" elapsed="0.000467"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="'${item}[username]' == '${TEST_USERNAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/users/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525435" elapsed="0.000018"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525536" elapsed="0.000022"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525242" elapsed="0.000334"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:04:44.525230" elapsed="0.000359"/>
+</if>
+<var name="${item}">{'id': 1, 'role': 'user', 'username': '435'}</var>
+<status status="PASS" start="2026-06-23T00:04:44.525204" elapsed="0.000400"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[username]' == '${TEST_USERNAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/users/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525880" elapsed="0.000014"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525917" elapsed="0.000008"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.525726" elapsed="0.000211"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:04:44.525718" elapsed="0.000228"/>
+</if>
+<var name="${item}">{'id': 80, 'role': 'merchant', 'username': 'e2e_merchant'}</var>
+<status status="PASS" start="2026-06-23T00:04:44.525697" elapsed="0.000261"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[username]' == '${TEST_USERNAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/users/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:04:44.526159" elapsed="0.000012"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.526191" elapsed="0.000006"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:04:44.526042" elapsed="0.000165"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:04:44.526035" elapsed="0.000181"/>
+</if>
+<var name="${item}">{'id': 84, 'role': 'admin', 'username': 'admin'}</var>
+<status status="PASS" start="2026-06-23T00:04:44.526021" elapsed="0.000206"/>
+</iter>
+<var>${item}</var>
+<value>@{json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:44.525072" elapsed="0.001168"/>
+</for>
+<doc>清理测试数据：按用户名查找并删除</doc>
+<status status="PASS" start="2026-06-23T00:04:42.495259" elapsed="2.031013"/>
+</kw>
+<kw name="Delete API Session" owner="base">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:44.526464" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2026-06-23T00:04:44.526429" elapsed="0.000078"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:44.526340" elapsed="0.000191"/>
+</kw>
+<arg>Delete Test User</arg>
+<arg>AND</arg>
+<arg>Delete API Session</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-06-23T00:04:42.494754" elapsed="2.031795"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:27.753748" elapsed="16.772821"/>
+</suite>
+<suite id="s1-s2" name="03 Product Api" source="E:\rjcs\automatedtest\api_tests\tests\03_product_api.robot">
+<kw name="Create API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:44.530380" level="INFO">Creating Session using : alias=api, url=http://localhost:8081, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2026-06-23T00:04:44.530399" level="DEBUG">Creating session: api</msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=${FALSE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-06-23T00:04:44.530260" elapsed="0.000375"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:44.530110" elapsed="0.000568"/>
+</kw>
+<test id="s1-s2-t1" name="TC_PROD_01_新增商品_成功" line="21">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:44.531344" level="INFO">${body} = {'name': 'RF测试商品', 'price': '99.90', 'stock': '50', 'description': '自动化测试商品'}</msg>
+<var>${body}</var>
+<arg>name=${TEST_PRODUCT_NAME}</arg>
+<arg>price=99.90</arg>
+<arg>stock=50</arg>
+<arg>description=自动化测试商品</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:44.531119" elapsed="0.000243"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:44.532449" level="DEBUG">Starting new HTTP connection (1): localhost:8081</msg>
+<msg time="2026-06-23T00:04:46.570358" level="DEBUG">http://localhost:8081 "POST /api/products HTTP/1.1" 201 273</msg>
+<msg time="2026-06-23T00:04:46.570689" level="INFO">POST Request : url=http://localhost:8081/api/products 
+ path_url=/api/products 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '132', 'Content-Type': 'application/json'} 
+ body=b'{"name": "RF\\u6d4b\\u8bd5\\u5546\\u54c1", "price": "99.90", "stock": "50", "description": "\\u81ea\\u52a8\\u5316\\u6d4b\\u8bd5\\u5546\\u54c1"}' 
+ </msg>
+<msg time="2026-06-23T00:04:46.570737" level="INFO">POST Response : url=http://localhost:8081/api/products 
+ status=201, reason=CREATED 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:46 GMT', 'Content-Type': 'application/json', 'Content-Length': '273', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 201,
+  "data": {
+    "created_at": "2026-06-23 00:04:47",
+    "description": "\u81ea\u52a8\u5316\u6d4b\u8bd5\u5546\u54c1",
+    "id": 69,
+    "name": "RF\u6d4b\u8bd5\u5546\u54c1",
+    "price": 99.9,
+    "stock": 50
+  },
+  "message": "\u521b\u5efa\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:46.570820" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:44.531696" elapsed="2.039163"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:46.570914" elapsed="0.000030"/>
+</return>
+<msg time="2026-06-23T00:04:46.571026" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>/products</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:44.531553" elapsed="2.039487"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:46.572133" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:46.571444" elapsed="0.000745"/>
+</kw>
+<arg>${resp}</arg>
+<arg>201</arg>
+<status status="PASS" start="2026-06-23T00:04:46.571252" elapsed="0.000979"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:46.572965" level="INFO">${json} = {'code': 201, 'data': {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 99.9, 'stock': 50}, 'message': '创建成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:46.572638" elapsed="0.000344"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:46.573009" elapsed="0.000018"/>
+</return>
+<msg time="2026-06-23T00:04:46.573093" level="INFO">${data} = {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 99.9, 'stock': 50}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:46.572484" elapsed="0.000623"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:46.573650" level="INFO">${PROD_ID} = 69</msg>
+<arg>${PROD_ID}</arg>
+<arg>${data}[id]</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-06-23T00:04:46.573241" elapsed="0.000434"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:46.573968" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[price]</arg>
+<arg>99.9</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-06-23T00:04:46.573768" elapsed="0.000236"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:44.530706" elapsed="2.043398"/>
+</test>
+<test id="s1-s2-t2" name="TC_PROD_02_查询商品详情" line="33">
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:46.575772" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:48.596489" level="DEBUG">http://localhost:8081 "GET /api/products/69 HTTP/1.1" 200 232</msg>
+<msg time="2026-06-23T00:04:48.596716" level="INFO">GET Request : url=http://localhost:8081/api/products/69 
+ path_url=/api/products/69 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:48.596759" level="INFO">GET Response : url=http://localhost:8081/api/products/69 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:48 GMT', 'Content-Type': 'application/json', 'Content-Length': '232', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": {
+    "created_at": "2026-06-23 00:04:47",
+    "description": "\u81ea\u52a8\u5316\u6d4b\u8bd5\u5546\u54c1",
+    "id": 69,
+    "name": "RF\u6d4b\u8bd5\u5546\u54c1",
+    "price": 99.9,
+    "stock": 50
+  }
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:48.596840" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:46.575055" elapsed="2.021799"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:48.596902" elapsed="0.000027"/>
+</return>
+<msg time="2026-06-23T00:04:48.597009" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/products/${PROD_ID}</arg>
+<status status="PASS" start="2026-06-23T00:04:46.574727" elapsed="2.022294"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:48.597868" level="INFO">${json} = {'code': 200, 'data': {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 99.9, 'stock': 50}}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.597485" elapsed="0.000401"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:48.598341" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.597951" elapsed="0.000425"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:48.597261" elapsed="0.001153"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:48.599116" level="INFO">${json} = {'code': 200, 'data': {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 99.9, 'stock': 50}}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.598724" elapsed="0.000410"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:48.599164" elapsed="0.000022"/>
+</return>
+<msg time="2026-06-23T00:04:48.599254" level="INFO">${data} = {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 99.9, 'stock': 50}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:48.598575" elapsed="0.000693"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:04:48.599583" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[name]</arg>
+<arg>${TEST_PRODUCT_NAME}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.599412" elapsed="0.000203"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:46.574339" elapsed="2.025398"/>
+</test>
+<test id="s1-s2-t3" name="TC_PROD_03_编辑商品价格" line="39">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:48.600753" level="INFO">${body} = {'price': '79.90', 'stock': '30'}</msg>
+<var>${body}</var>
+<arg>price=79.90</arg>
+<arg>stock=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.600573" elapsed="0.000196"/>
+</kw>
+<kw name="PUT API" owner="base">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:48.601796" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:50.636556" level="DEBUG">http://localhost:8081 "PUT /api/products/69 HTTP/1.1" 200 273</msg>
+<msg time="2026-06-23T00:04:50.636812" level="INFO">PUT Request : url=http://localhost:8081/api/products/69 
+ path_url=/api/products/69 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '33', 'Content-Type': 'application/json'} 
+ body=b'{"price": "79.90", "stock": "30"}' 
+ </msg>
+<msg time="2026-06-23T00:04:50.636858" level="INFO">PUT Response : url=http://localhost:8081/api/products/69 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:50 GMT', 'Content-Type': 'application/json', 'Content-Length': '273', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": {
+    "created_at": "2026-06-23 00:04:47",
+    "description": "\u81ea\u52a8\u5316\u6d4b\u8bd5\u5546\u54c1",
+    "id": 69,
+    "name": "RF\u6d4b\u8bd5\u5546\u54c1",
+    "price": 79.9,
+    "stock": 30
+  },
+  "message": "\u66f4\u65b0\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:50.636943" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:48.601074" elapsed="2.035883"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:50.637012" elapsed="0.000027"/>
+</return>
+<msg time="2026-06-23T00:04:50.637129" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/products/${PROD_ID}</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:48.600910" elapsed="2.036232"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.638858" level="INFO">${json} = {'code': 200, 'data': {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 79.9, 'stock': 30}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.638323" elapsed="0.000561"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.639376" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.638968" elapsed="0.000466"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:50.638116" elapsed="0.001356"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.640094" level="INFO">${json} = {'code': 200, 'data': {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 79.9, 'stock': 30}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.639804" elapsed="0.000307"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:04:50.640139" elapsed="0.000022"/>
+</return>
+<msg time="2026-06-23T00:04:50.640227" level="INFO">${data} = {'created_at': '2026-06-23 00:04:47', 'description': '自动化测试商品', 'id': 69, 'name': 'RF测试商品', 'price': 79.9, 'stock': 30}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:04:50.639660" elapsed="0.000580"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.640501" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[price]</arg>
+<arg>79.9</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.640353" elapsed="0.000186"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.640865" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[stock]</arg>
+<arg>30</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.640702" elapsed="0.000196"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:48.600193" elapsed="2.040813"/>
+</test>
+<test id="s1-s2-t4" name="TC_PROD_04_价格为负数_创建失败" line="47">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:50.643138" level="INFO">${body} = {'name': '负价商品', 'price': '-10', 'stock': '1'}</msg>
+<var>${body}</var>
+<arg>name=负价商品</arg>
+<arg>price=-10</arg>
+<arg>stock=1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.642865" elapsed="0.000291"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:50.644439" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:52.670737" level="DEBUG">http://localhost:8081 "POST /api/products HTTP/1.1" 400 77</msg>
+<msg time="2026-06-23T00:04:52.671089" level="INFO">POST Request : url=http://localhost:8081/api/products 
+ path_url=/api/products 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '66', 'Content-Type': 'application/json'} 
+ body=b'{"name": "\\u8d1f\\u4ef7\\u5546\\u54c1", "price": "-10", "stock": "1"}' 
+ </msg>
+<msg time="2026-06-23T00:04:52.671139" level="INFO">POST Response : url=http://localhost:8081/api/products 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:52 GMT', 'Content-Type': 'application/json', 'Content-Length': '77', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u4ef7\u683c\u4e0d\u80fd\u4e3a\u8d1f\u6570"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:52.671216" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:50.643641" elapsed="2.027589"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:52.671275" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:04:52.671385" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/products</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:50.643472" elapsed="2.027928"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:52.672888" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:52.672174" elapsed="0.000751"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:52.671969" elapsed="0.001019"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:50.642295" elapsed="2.030956"/>
+</test>
+<test id="s1-s2-t5" name="TC_PROD_05_库存为负数_更新失败" line="52">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:52.674496" level="INFO">${body} = {'stock': '-5'}</msg>
+<var>${body}</var>
+<arg>stock=-5</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:52.674234" elapsed="0.000278"/>
+</kw>
+<kw name="PUT API" owner="base">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:52.675579" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:54.712164" level="DEBUG">http://localhost:8081 "PUT /api/products/69 HTTP/1.1" 400 77</msg>
+<msg time="2026-06-23T00:04:54.712454" level="INFO">PUT Request : url=http://localhost:8081/api/products/69 
+ path_url=/api/products/69 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"stock": "-5"}' 
+ </msg>
+<msg time="2026-06-23T00:04:54.712499" level="INFO">PUT Response : url=http://localhost:8081/api/products/69 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:54 GMT', 'Content-Type': 'application/json', 'Content-Length': '77', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u5e93\u5b58\u4e0d\u80fd\u4e3a\u8d1f\u6570"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:54.712600" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:52.674849" elapsed="2.037784"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:54.712684" elapsed="0.000029"/>
+</return>
+<msg time="2026-06-23T00:04:54.712824" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/products/${PROD_ID}</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:52.674685" elapsed="2.038153"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:54.714015" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:54.713322" elapsed="0.000734"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:54.713130" elapsed="0.000964"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:52.673813" elapsed="2.040435"/>
+</test>
+<test id="s1-s2-t6" name="TC_PROD_06_缺少必填字段_name_创建失败" line="57">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:04:54.716965" level="INFO">${body} = {'price': '10'}</msg>
+<var>${body}</var>
+<arg>price=10</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:04:54.716762" elapsed="0.000218"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:54.718404" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:56.743239" level="DEBUG">http://localhost:8081 "POST /api/products HTTP/1.1" 400 78</msg>
+<msg time="2026-06-23T00:04:56.743461" level="INFO">POST Request : url=http://localhost:8081/api/products 
+ path_url=/api/products 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"price": "10"}' 
+ </msg>
+<msg time="2026-06-23T00:04:56.743508" level="INFO">POST Response : url=http://localhost:8081/api/products 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:56 GMT', 'Content-Type': 'application/json', 'Content-Length': '78', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u5fc5\u586b\u5b57\u6bb5: ['name', 'price']"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:56.743594" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:54.717389" elapsed="2.026219"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:56.743653" elapsed="0.000027"/>
+</return>
+<msg time="2026-06-23T00:04:56.743759" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/products</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:04:54.717154" elapsed="2.026618"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:56.744764" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:56.744124" elapsed="0.000676"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:04:56.743949" elapsed="0.000890"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:54.716291" elapsed="2.028656"/>
+</test>
+<test id="s1-s2-t7" name="TC_PROD_07_删除商品_成功" line="62">
+<kw name="DELETE API" owner="base">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:56.746365" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:04:58.807008" level="DEBUG">http://localhost:8081 "DELETE /api/products/69 HTTP/1.1" 200 59</msg>
+<msg time="2026-06-23T00:04:58.807196" level="INFO">DELETE Request : url=http://localhost:8081/api/products/69 
+ path_url=/api/products/69 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:04:58.807230" level="INFO">DELETE Response : url=http://localhost:8081/api/products/69 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:04:58 GMT', 'Content-Type': 'application/json', 'Content-Length': '59', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "message": "\u5220\u9664\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:04:58.807299" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:56.745707" elapsed="2.061605"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:04:58.807353" elapsed="0.000025"/>
+</return>
+<msg time="2026-06-23T00:04:58.807449" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/products/${PROD_ID}</arg>
+<status status="PASS" start="2026-06-23T00:04:56.745548" elapsed="2.061914"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:04:58.818305" level="INFO">${json} = {'code': 200, 'message': '删除成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:04:58.817820" elapsed="0.000506"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:04:58.818868" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:04:58.818399" elapsed="0.000510"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:04:58.813450" elapsed="0.005500"/>
+</kw>
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:04:58.820298" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:00.861212" level="DEBUG">http://localhost:8081 "GET /api/products/69 HTTP/1.1" 404 53</msg>
+<msg time="2026-06-23T00:05:00.861444" level="INFO">GET Request : url=http://localhost:8081/api/products/69 
+ path_url=/api/products/69 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:05:00.861487" level="INFO">GET Response : url=http://localhost:8081/api/products/69 
+ status=404, reason=NOT FOUND 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:00 GMT', 'Content-Type': 'application/json', 'Content-Length': '53', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 404,
+  "message": "\u672a\u627e\u5230"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:00.861557" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:04:58.819570" elapsed="2.042000"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:00.861629" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:05:00.861736" level="INFO">${resp2} = &lt;Response [404]&gt;</msg>
+<var>${resp2}</var>
+<arg>/products/${PROD_ID}</arg>
+<status status="PASS" start="2026-06-23T00:04:58.819183" elapsed="2.042565"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:00.863231" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:00.862498" elapsed="0.000772"/>
+</kw>
+<arg>${resp2}</arg>
+<arg>404</arg>
+<status status="PASS" start="2026-06-23T00:05:00.862309" elapsed="0.001000"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:56.745102" elapsed="4.118861"/>
+</test>
+<kw name="Run Keywords" owner="BuiltIn" type="TEARDOWN">
+<kw name="Cleanup Test Product">
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:00.875352" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:02.897341" level="DEBUG">http://localhost:8081 "GET /api/products HTTP/1.1" 200 1331</msg>
+<msg time="2026-06-23T00:05:02.897581" level="INFO">GET Request : url=http://localhost:8081/api/products 
+ path_url=/api/products 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:05:02.897626" level="INFO">GET Response : url=http://localhost:8081/api/products 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:02 GMT', 'Content-Type': 'application/json', 'Content-Length': '1331', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": [
+    {
+      "created_at": "2024-06-15 10:30:00",
+      "description": "\u65d7\u8230\u667a\u80fd\u624b\u673a\uff0c\u536b\u661f\u901a\u8bdd",
+      "id": 1,
+      "name": "\u534e\u4e3aMate 60 Pro",
+      "price": 6999.0,
+      "stock": 50
+    },
+    {
+      "created_at": null,
+      "description": "A16\u82af\u7247\uff0c4800\u4e07\u50cf\u7d20",
+      "id": 2,
+      "name": "\u82f9\u679ciPhone 15",
+      "price": 7999.0,
+      "stock": 30
+    },
+    {
+      "created_at": null,
+      "description": "\u5f95\u5361\u5149\u5b66\uff0c\u9a81\u9f998Gen3",
+      "id": 3,
+      "name": "\u5c0f\u7c7314 Ultra",
+      "price": 5999.0,
+      "stock": 80
+    },
+    {
+      "created_at": null,
+      "description": "\u884c\u4e1a\u6807\u6746\u964d\u566a\uff0c30\u5c0f\u65f6\u7eed\u822a",
+      "id": 4,
+      "name": "\u7d22\u5c3c\u964d\u566a\u8033\u673aWH-1000XM5",
+      "price": 2499.0,
+      "stock": 120
+    },
+    {
+      "created_at": null,
+      "description": "12\u4ee3\u9177\u777fi7\uff0cRTX3060\uff0c\u521b\u4f5c\u672c",
+      "id": 5,
+      "name": "\u6234\u5c14\u7075\u8d8a16 Plus",
+      "price": 7299.0,
+      "stock": 25
+    },
+    {
+      "created_at": "2026-06-22 15:30:51",
+      "description": "",
+      "id": 8,
+      "name": "\u963f\u53d1",
+      "price": 65.0,
+      "stock": 64
+    }
+  ]
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:02.897703" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:00.874561" elapsed="2.023155"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:02.897759" elapsed="0.000026"/>
+</return>
+<msg time="2026-06-23T00:05:02.897861" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/products</arg>
+<status status="PASS" start="2026-06-23T00:05:00.874285" elapsed="2.023588"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:02.897962" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2026-06-23T00:05:02.898773" level="INFO">To JSON using : content={
+  "code": 200,
+  "data": [
+    {
+      "created_at": "2024-06-15 10:30:00",
+      "description": "\u65d7\u8230\u667a\u80fd\u624b\u673a\uff0c\u536b\u661f\u901a\u8bdd",
+      "id": 1,
+      "name": "\u534e\u4e3aMate 60 Pro",
+      "price": 6999.0,
+      "stock": 50
+    },
+    {
+      "created_at": null,
+      "description": "A16\u82af\u7247\uff0c4800\u4e07\u50cf\u7d20",
+      "id": 2,
+      "name": "\u82f9\u679ciPhone 15",
+      "price": 7999.0,
+      "stock": 30
+    },
+    {
+      "created_at": null,
+      "description": "\u5f95\u5361\u5149\u5b66\uff0c\u9a81\u9f998Gen3",
+      "id": 3,
+      "name": "\u5c0f\u7c7314 Ultra",
+      "price": 5999.0,
+      "stock": 80
+    },
+    {
+      "created_at": null,
+      "description": "\u884c\u4e1a\u6807\u6746\u964d\u566a\uff0c30\u5c0f\u65f6\u7eed\u822a",
+      "id": 4,
+      "name": "\u7d22\u5c3c\u964d\u566a\u8033\u673aWH-1000XM5",
+      "price": 2499.0,
+      "stock": 120
+    },
+    {
+      "created_at": null,
+      "description": "12\u4ee3\u9177\u777fi7\uff0cRTX3060\uff0c\u521b\u4f5c\u672c",
+      "id": 5,
+      "name": "\u6234\u5c14\u7075\u8d8a16 Plus",
+      "price": 7299.0,
+      "stock": 25
+    },
+    {
+      "created_at": "2026-06-22 15:30:51",
+      "description": "",
+      "id": 8,
+      "name": "\u963f\u53d1",
+      "price": 65.0,
+      "stock": 64
+    }
+  ]
+}
+ </msg>
+<msg time="2026-06-23T00:05:02.898819" level="INFO">To JSON using : pretty_print=False </msg>
+<msg time="2026-06-23T00:05:02.898901" level="INFO">${json} = {'code': 200, 'data': [{'created_at': '2024-06-15 10:30:00', 'description': '旗舰智能手机，卫星通话', 'id': 1, 'name': '华为Mate 60 Pro', 'price': 6999.0, 'stock': 50}, {'created_at': None, 'description': 'A16芯片，4...</msg>
+<var>${json}</var>
+<arg>${resp.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="PASS" start="2026-06-23T00:05:02.897945" elapsed="0.000973"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899372" elapsed="0.000015"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899414" elapsed="0.000012"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899185" elapsed="0.000254"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.899174" elapsed="0.000276"/>
+</if>
+<var name="${item}">{'created_at': '2024-06-15 10:30:00', 'description': '旗舰智能手机，卫星通话', 'id': 1, 'name': '华为Mate 60 Pro', 'price': 6999.0, 'stock': 50}</var>
+<status status="PASS" start="2026-06-23T00:05:02.899149" elapsed="0.000314"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899686" elapsed="0.000011"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899721" elapsed="0.000007"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899558" elapsed="0.000182"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.899550" elapsed="0.000200"/>
+</if>
+<var name="${item}">{'created_at': None, 'description': 'A16芯片，4800万像素', 'id': 2, 'name': '苹果iPhone 15', 'price': 7999.0, 'stock': 30}</var>
+<status status="PASS" start="2026-06-23T00:05:02.899535" elapsed="0.000244"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899980" elapsed="0.000011"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900012" elapsed="0.000007"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.899863" elapsed="0.000166"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.899856" elapsed="0.000182"/>
+</if>
+<var name="${item}">{'created_at': None, 'description': '徕卡光学，骁龙8Gen3', 'id': 3, 'name': '小米14 Ultra', 'price': 5999.0, 'stock': 80}</var>
+<status status="PASS" start="2026-06-23T00:05:02.899843" elapsed="0.000206"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900257" elapsed="0.000011"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900288" elapsed="0.000007"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900144" elapsed="0.000161"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.900135" elapsed="0.000178"/>
+</if>
+<var name="${item}">{'created_at': None, 'description': '行业标杆降噪，30小时续航', 'id': 4, 'name': '索尼降噪耳机WH-1000XM5', 'price': 2499.0, 'stock': 120}</var>
+<status status="PASS" start="2026-06-23T00:05:02.900122" elapsed="0.000202"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900505" elapsed="0.000029"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900555" elapsed="0.000007"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900400" elapsed="0.000173"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.900392" elapsed="0.000190"/>
+</if>
+<var name="${item}">{'created_at': None, 'description': '12代酷睿i7，RTX3060，创作本', 'id': 5, 'name': '戴尔灵越16 Plus', 'price': 7299.0, 'stock': 25}</var>
+<status status="PASS" start="2026-06-23T00:05:02.900380" elapsed="0.000213"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_PRODUCT_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/products/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900786" elapsed="0.000012"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900816" elapsed="0.000007"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:02.900676" elapsed="0.000156"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:02.900669" elapsed="0.000172"/>
+</if>
+<var name="${item}">{'created_at': '2026-06-22 15:30:51', 'description': '', 'id': 8, 'name': '阿发', 'price': 65.0, 'stock': 64}</var>
+<status status="PASS" start="2026-06-23T00:05:02.900655" elapsed="0.000196"/>
+</iter>
+<var>${item}</var>
+<value>@{json}[data]</value>
+<status status="PASS" start="2026-06-23T00:05:02.898986" elapsed="0.001878"/>
+</for>
+<status status="PASS" start="2026-06-23T00:05:00.874144" elapsed="2.026753"/>
+</kw>
+<kw name="Delete API Session" owner="base">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:02.901095" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2026-06-23T00:05:02.901050" elapsed="0.000083"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:02.900961" elapsed="0.000196"/>
+</kw>
+<arg>Cleanup Test Product</arg>
+<arg>AND</arg>
+<arg>Delete API Session</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-06-23T00:05:00.873767" elapsed="2.027407"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:04:44.527007" elapsed="18.374189"/>
+</suite>
+<suite id="s1-s3" name="04 Medicine Api" source="E:\rjcs\automatedtest\api_tests\tests\04_medicine_api.robot">
+<kw name="Create API Session" owner="base" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:02.904909" level="INFO">Creating Session using : alias=api, url=http://localhost:8081, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2026-06-23T00:05:02.904929" level="DEBUG">Creating session: api</msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=${FALSE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-06-23T00:05:02.904793" elapsed="0.000211"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:02.904656" elapsed="0.000384"/>
+</kw>
+<test id="s1-s3-t1" name="TC_MED_01_新增药品_成功" line="23">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:05:02.905699" level="INFO">${body} = {'name': 'RF测试药品', 'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'price': '25.50', 'stock': '200', 'manufacturer': '测试制药有限公司'}</msg>
+<var>${body}</var>
+<arg>name=${TEST_MED_NAME}</arg>
+<arg>batch_no=${TEST_BATCH_NO}</arg>
+<arg>expiry_date=${TEST_EXPIRY_DATE}</arg>
+<arg>price=25.50</arg>
+<arg>stock=200</arg>
+<arg>manufacturer=测试制药有限公司</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:05:02.905419" elapsed="0.000299"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:02.906793" level="DEBUG">Starting new HTTP connection (1): localhost:8081</msg>
+<msg time="2026-06-23T00:05:04.959026" level="DEBUG">http://localhost:8081 "POST /api/medicines HTTP/1.1" 201 305</msg>
+<msg time="2026-06-23T00:05:04.959271" level="INFO">POST Request : url=http://localhost:8081/api/medicines 
+ path_url=/api/medicines 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '197', 'Content-Type': 'application/json'} 
+ body=b'{"name": "RF\\u6d4b\\u8bd5\\u836f\\u54c1", "batch_no": "BATCH-RF-001", "expiry_date": "2027-12-31", "price": "25.50", "stock": "200", "manufacturer": "\\u6d4b\\u8bd5\\u5236\\u836f\\u6709\\u9650\\u516c\\u53f8"}' 
+ </msg>
+<msg time="2026-06-23T00:05:04.959319" level="INFO">POST Response : url=http://localhost:8081/api/medicines 
+ status=201, reason=CREATED 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '305', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 201,
+  "data": {
+    "batch_no": "BATCH-RF-001",
+    "expiry_date": "2027-12-31",
+    "id": 40,
+    "manufacturer": "\u6d4b\u8bd5\u5236\u836f\u6709\u9650\u516c\u53f8",
+    "name": "RF\u6d4b\u8bd5\u836f\u54c1",
+    "price": 25.5,
+    "stock": 200
+  },
+  "message": "\u521b\u5efa\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:04.959410" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:02.906010" elapsed="2.053414"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:04.959480" elapsed="0.000034"/>
+</return>
+<msg time="2026-06-23T00:05:04.959605" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:05:02.905863" elapsed="2.053754"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.960746" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.960082" elapsed="0.000700"/>
+</kw>
+<arg>${resp}</arg>
+<arg>201</arg>
+<status status="PASS" start="2026-06-23T00:05:04.959857" elapsed="0.000964"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.961764" level="INFO">${json} = {'code': 201, 'data': {'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'id': 40, 'manufacturer': '测试制药有限公司', 'name': 'RF测试药品', 'price': 25.5, 'stock': 200}, 'message': '创建成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.961220" elapsed="0.000563"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:05:04.961817" elapsed="0.000018"/>
+</return>
+<msg time="2026-06-23T00:05:04.961902" level="INFO">${data} = {'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'id': 40, 'manufacturer': '测试制药有限公司', 'name': 'RF测试药品', 'price': 25.5, 'stock': 200}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:05:04.961021" elapsed="0.000894"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.962463" level="INFO">${MED_ID} = 40</msg>
+<arg>${MED_ID}</arg>
+<arg>${data}[id]</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.962045" elapsed="0.000443"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.962744" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[batch_no]</arg>
+<arg>${TEST_BATCH_NO}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.962593" elapsed="0.000181"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.963010" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[expiry_date]</arg>
+<arg>${TEST_EXPIRY_DATE}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.962877" elapsed="0.000159"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:02.905066" elapsed="2.058072"/>
+</test>
+<test id="s1-s3-t2" name="TC_MED_02_有效期格式错误_创建失败" line="38">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:05:04.964274" level="INFO">${body} = {'name': '格式错误药品', 'batch_no': 'BATCH-ERR', 'expiry_date': '2027/12/31', 'price': '10'}</msg>
+<var>${body}</var>
+<arg>name=格式错误药品</arg>
+<arg>batch_no=BATCH-ERR</arg>
+<arg>expiry_date=2027/12/31</arg>
+<arg>price=10</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.964029" elapsed="0.000263"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:04.965825" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:06.997149" level="DEBUG">http://localhost:8081 "POST /api/medicines HTTP/1.1" 400 105</msg>
+<msg time="2026-06-23T00:05:06.997589" level="INFO">POST Request : url=http://localhost:8081/api/medicines 
+ path_url=/api/medicines 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '117', 'Content-Type': 'application/json'} 
+ body=b'{"name": "\\u683c\\u5f0f\\u9519\\u8bef\\u836f\\u54c1", "batch_no": "BATCH-ERR", "expiry_date": "2027/12/31", "price": "10"}' 
+ </msg>
+<msg time="2026-06-23T00:05:06.997641" level="INFO">POST Response : url=http://localhost:8081/api/medicines 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:06 GMT', 'Content-Type': 'application/json', 'Content-Length': '105', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u6709\u6548\u671f\u683c\u5f0f\u9519\u8bef\uff0c\u5e94\u4e3aYYYY-MM-DD"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:06.997728" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:04.964677" elapsed="2.033065"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:06.997802" elapsed="0.000030"/>
+</return>
+<msg time="2026-06-23T00:05:06.997917" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:05:04.964471" elapsed="2.033459"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:06.999312" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:06.998654" elapsed="0.000695"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:05:06.998461" elapsed="0.000930"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:04.963468" elapsed="2.036030"/>
+</test>
+<test id="s1-s3-t3" name="TC_MED_03_编辑药品厂商" line="47">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:05:07.000216" level="INFO">${body} = {'manufacturer': '更新制药集团'}</msg>
+<var>${body}</var>
+<arg>manufacturer=更新制药集团</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:05:07.000026" elapsed="0.000206"/>
+</kw>
+<kw name="PUT API" owner="base">
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:07.001944" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:09.024996" level="DEBUG">http://localhost:8081 "PUT /api/medicines/40 HTTP/1.1" 200 293</msg>
+<msg time="2026-06-23T00:05:09.025227" level="INFO">PUT Request : url=http://localhost:8081/api/medicines/40 
+ path_url=/api/medicines/40 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
+ body=b'{"manufacturer": "\\u66f4\\u65b0\\u5236\\u836f\\u96c6\\u56e2"}' 
+ </msg>
+<msg time="2026-06-23T00:05:09.025261" level="INFO">PUT Response : url=http://localhost:8081/api/medicines/40 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:09 GMT', 'Content-Type': 'application/json', 'Content-Length': '293', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": {
+    "batch_no": "BATCH-RF-001",
+    "expiry_date": "2027-12-31",
+    "id": 40,
+    "manufacturer": "\u66f4\u65b0\u5236\u836f\u96c6\u56e2",
+    "name": "RF\u6d4b\u8bd5\u836f\u54c1",
+    "price": 25.5,
+    "stock": 200
+  },
+  "message": "\u66f4\u65b0\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:09.025385" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:07.001088" elapsed="2.024312"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:09.025480" elapsed="0.000030"/>
+</return>
+<msg time="2026-06-23T00:05:09.025594" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines/${MED_ID}</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:05:07.000918" elapsed="2.024689"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:05:09.026348" level="INFO">${json} = {'code': 200, 'data': {'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'id': 40, 'manufacturer': '更新制药集团', 'name': 'RF测试药品', 'price': 25.5, 'stock': 200}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.025970" elapsed="0.000397"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:09.026806" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.026428" elapsed="0.000412"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:05:09.025801" elapsed="0.001071"/>
+</kw>
+<kw name="Get Response Data" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:05:09.027468" level="INFO">${json} = {'code': 200, 'data': {'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'id': 40, 'manufacturer': '更新制药集团', 'name': 'RF测试药品', 'price': 25.5, 'stock': 200}, 'message': '更新成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.027140" elapsed="0.000344"/>
+</kw>
+<return>
+<value>${json}[data]</value>
+<status status="PASS" start="2026-06-23T00:05:09.027510" elapsed="0.000015"/>
+</return>
+<msg time="2026-06-23T00:05:09.027586" level="INFO">${data} = {'batch_no': 'BATCH-RF-001', 'expiry_date': '2027-12-31', 'id': 40, 'manufacturer': '更新制药集团', 'name': 'RF测试药品', 'price': 25.5, 'stock': 200}</msg>
+<var>${data}</var>
+<arg>${resp}</arg>
+<status status="PASS" start="2026-06-23T00:05:09.027011" elapsed="0.000587"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<msg time="2026-06-23T00:05:09.027825" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${data}[manufacturer]</arg>
+<arg>更新制药集团</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.027696" elapsed="0.000157"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:06.999638" elapsed="2.028319"/>
+</test>
+<test id="s1-s3-t4" name="TC_MED_04_缺少批号_创建失败" line="54">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-23T00:05:09.028708" level="INFO">${body} = {'name': '无批号药品', 'expiry_date': '2027-06-01', 'price': '15'}</msg>
+<var>${body}</var>
+<arg>name=无批号药品</arg>
+<arg>expiry_date=2027-06-01</arg>
+<arg>price=15</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.028525" elapsed="0.000199"/>
+</kw>
+<kw name="POST API" owner="base">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:09.029740" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:11.049638" level="DEBUG">http://localhost:8081 "POST /api/medicines HTTP/1.1" 400 105</msg>
+<msg time="2026-06-23T00:05:11.049891" level="INFO">POST Request : url=http://localhost:8081/api/medicines 
+ path_url=/api/medicines 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '86', 'Content-Type': 'application/json'} 
+ body=b'{"name": "\\u65e0\\u6279\\u53f7\\u836f\\u54c1", "expiry_date": "2027-06-01", "price": "15"}' 
+ </msg>
+<msg time="2026-06-23T00:05:11.049939" level="INFO">POST Response : url=http://localhost:8081/api/medicines 
+ status=400, reason=BAD REQUEST 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:11 GMT', 'Content-Type': 'application/json', 'Content-Length': '105', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 400,
+  "message": "\u5fc5\u586b\u5b57\u6bb5: ['name', 'batch_no', 'expiry_date', 'price']"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:11.050025" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:09.028995" elapsed="2.021045"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:11.050088" elapsed="0.000030"/>
+</return>
+<msg time="2026-06-23T00:05:11.050223" level="INFO">${resp} = &lt;Response [400]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines</arg>
+<arg>${body}</arg>
+<status status="PASS" start="2026-06-23T00:05:09.028853" elapsed="2.021385"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:11.051714" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:11.050624" elapsed="0.001139"/>
+</kw>
+<arg>${resp}</arg>
+<arg>400</arg>
+<status status="PASS" start="2026-06-23T00:05:11.050434" elapsed="0.001371"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:09.028139" elapsed="2.023813"/>
+</test>
+<test id="s1-s3-t5" name="TC_MED_05_删除药品_成功" line="62">
+<kw name="DELETE API" owner="base">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:11.053352" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:13.076715" level="DEBUG">http://localhost:8081 "DELETE /api/medicines/40 HTTP/1.1" 200 59</msg>
+<msg time="2026-06-23T00:05:13.076960" level="INFO">DELETE Request : url=http://localhost:8081/api/medicines/40 
+ path_url=/api/medicines/40 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:05:13.077001" level="INFO">DELETE Response : url=http://localhost:8081/api/medicines/40 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:13 GMT', 'Content-Type': 'application/json', 'Content-Length': '59', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "message": "\u5220\u9664\u6210\u529f"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:13.077081" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:11.052720" elapsed="2.024375"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:13.077159" elapsed="0.000031"/>
+</return>
+<msg time="2026-06-23T00:05:13.077271" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines/${MED_ID}</arg>
+<status status="PASS" start="2026-06-23T00:05:11.052549" elapsed="2.024734"/>
+</kw>
+<kw name="Should Be Code" owner="base">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-23T00:05:13.078325" level="INFO">${json} = {'code': 200, 'message': '删除成功'}</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-23T00:05:13.077824" elapsed="0.000616"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:13.079301" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json}[code]</arg>
+<arg>${expected_code}</arg>
+<arg>msg=期望 code=${expected_code}, 实际 code=${json}[code] | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:13.078593" elapsed="0.000783"/>
+</kw>
+<arg>${resp}</arg>
+<arg>200</arg>
+<status status="PASS" start="2026-06-23T00:05:13.077521" elapsed="0.001907"/>
+</kw>
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:13.081297" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:15.103327" level="DEBUG">http://localhost:8081 "GET /api/medicines/40 HTTP/1.1" 404 53</msg>
+<msg time="2026-06-23T00:05:15.103533" level="INFO">GET Request : url=http://localhost:8081/api/medicines/40 
+ path_url=/api/medicines/40 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:05:15.103575" level="INFO">GET Response : url=http://localhost:8081/api/medicines/40 
+ status=404, reason=NOT FOUND 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:15 GMT', 'Content-Type': 'application/json', 'Content-Length': '53', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 404,
+  "message": "\u672a\u627e\u5230"
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:15.103653" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:13.080428" elapsed="2.023239"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:15.103711" elapsed="0.000025"/>
+</return>
+<msg time="2026-06-23T00:05:15.103814" level="INFO">${resp2} = &lt;Response [404]&gt;</msg>
+<var>${resp2}</var>
+<arg>/medicines/${MED_ID}</arg>
+<status status="PASS" start="2026-06-23T00:05:13.079914" elapsed="2.023912"/>
+</kw>
+<kw name="Should Be HTTP Status" owner="base">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-06-23T00:05:15.106511" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>msg=期望 HTTP ${expected_status}, 实际 HTTP ${response.status_code} | Body: ${response.text}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-06-23T00:05:15.105864" elapsed="0.000684"/>
+</kw>
+<arg>${resp2}</arg>
+<arg>404</arg>
+<status status="PASS" start="2026-06-23T00:05:15.105678" elapsed="0.000907"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:11.052175" elapsed="4.054556"/>
+</test>
+<kw name="Run Keywords" owner="BuiltIn" type="TEARDOWN">
+<kw name="Cleanup Test Medicine">
+<kw name="GET API" owner="base">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:15.108394" level="DEBUG">Resetting dropped connection: localhost</msg>
+<msg time="2026-06-23T00:05:17.154312" level="DEBUG">http://localhost:8081 "GET /api/medicines HTTP/1.1" 200 480</msg>
+<msg time="2026-06-23T00:05:17.154522" level="INFO">GET Request : url=http://localhost:8081/api/medicines 
+ path_url=/api/medicines 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-23T00:05:17.154583" level="INFO">GET Response : url=http://localhost:8081/api/medicines 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.8 Python/3.14.2', 'Date': 'Mon, 22 Jun 2026 16:05:17 GMT', 'Content-Type': 'application/json', 'Content-Length': '480', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'} 
+ body={
+  "code": 200,
+  "data": [
+    {
+      "batch_no": "AM20250301",
+      "expiry_date": "2027-03-01",
+      "id": 1,
+      "manufacturer": "\u534e\u5357\u5236\u836f\u6709\u9650\u516c\u53f8",
+      "name": "\u963f\u83ab\u897f\u6797\u80f6\u56ca",
+      "price": 12.5,
+      "stock": 500
+    },
+    {
+      "batch_no": "969",
+      "expiry_date": "2026-06-20",
+      "id": 3,
+      "manufacturer": "",
+      "name": "urut\uff0c",
+      "price": 786.0,
+      "stock": 656
+    }
+  ]
+}
+ 
+ </msg>
+<msg time="2026-06-23T00:05:17.154665" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>${API_PREFIX}${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=ANY</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-06-23T00:05:15.107709" elapsed="2.046970"/>
+</kw>
+<return>
+<value>${resp}</value>
+<status status="PASS" start="2026-06-23T00:05:17.154728" elapsed="0.000030"/>
+</return>
+<msg time="2026-06-23T00:05:17.154833" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/medicines</arg>
+<status status="PASS" start="2026-06-23T00:05:15.107454" elapsed="2.047392"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:17.154934" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2026-06-23T00:05:17.155595" level="INFO">To JSON using : content={
+  "code": 200,
+  "data": [
+    {
+      "batch_no": "AM20250301",
+      "expiry_date": "2027-03-01",
+      "id": 1,
+      "manufacturer": "\u534e\u5357\u5236\u836f\u6709\u9650\u516c\u53f8",
+      "name": "\u963f\u83ab\u897f\u6797\u80f6\u56ca",
+      "price": 12.5,
+      "stock": 500
+    },
+    {
+      "batch_no": "969",
+      "expiry_date": "2026-06-20",
+      "id": 3,
+      "manufacturer": "",
+      "name": "urut\uff0c",
+      "price": 786.0,
+      "stock": 656
+    }
+  ]
+}
+ </msg>
+<msg time="2026-06-23T00:05:17.155615" level="INFO">To JSON using : pretty_print=False </msg>
+<msg time="2026-06-23T00:05:17.155665" level="INFO">${json} = {'code': 200, 'data': [{'batch_no': 'AM20250301', 'expiry_date': '2027-03-01', 'id': 1, 'manufacturer': '华南制药有限公司', 'name': '阿莫西林胶囊', 'price': 12.5, 'stock': 500}, {'batch_no': '969', 'expiry_date': '...</msg>
+<var>${json}</var>
+<arg>${resp.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="PASS" start="2026-06-23T00:05:17.154919" elapsed="0.000761"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_MED_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/medicines/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:17.156013" elapsed="0.000013"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:17.156083" elapsed="0.000011"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:17.155864" elapsed="0.000244"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:17.155854" elapsed="0.000283"/>
+</if>
+<var name="${item}">{'batch_no': 'AM20250301', 'expiry_date': '2027-03-01', 'id': 1, 'manufacturer': '华南制药有限公司', 'name': '阿莫西林胶囊', 'price': 12.5, 'stock': 500}</var>
+<status status="PASS" start="2026-06-23T00:05:17.155835" elapsed="0.000316"/>
+</iter>
+<iter>
+<if>
+<branch type="IF" condition="'${item}[name]' == '${TEST_MED_NAME}'">
+<kw name="DELETE API" owner="base">
+<arg>/medicines/${item}[id]</arg>
+<status status="NOT RUN" start="2026-06-23T00:05:17.156470" elapsed="0.000014"/>
+</kw>
+<break>
+<status status="NOT RUN" start="2026-06-23T00:05:17.156512" elapsed="0.000010"/>
+</break>
+<status status="NOT RUN" start="2026-06-23T00:05:17.156320" elapsed="0.000215"/>
+</branch>
+<status status="PASS" start="2026-06-23T00:05:17.156311" elapsed="0.000235"/>
+</if>
+<var name="${item}">{'batch_no': '969', 'expiry_date': '2026-06-20', 'id': 3, 'manufacturer': '', 'name': 'urut，', 'price': 786.0, 'stock': 656}</var>
+<status status="PASS" start="2026-06-23T00:05:17.156291" elapsed="0.000267"/>
+</iter>
+<var>${item}</var>
+<value>@{json}[data]</value>
+<status status="PASS" start="2026-06-23T00:05:17.155719" elapsed="0.000853"/>
+</for>
+<status status="PASS" start="2026-06-23T00:05:15.107351" elapsed="2.049254"/>
+</kw>
+<kw name="Delete API Session" owner="base">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2026-06-23T00:05:17.156803" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2026-06-23T00:05:17.156767" elapsed="0.000070"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:17.156677" elapsed="0.000183"/>
+</kw>
+<arg>Cleanup Test Medicine</arg>
+<arg>AND</arg>
+<arg>Delete API Session</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-06-23T00:05:15.107072" elapsed="2.049830"/>
+</kw>
+<status status="PASS" start="2026-06-23T00:05:02.901677" elapsed="14.255246"/>
+</suite>
+<status status="PASS" start="2026-06-23T00:04:27.713341" elapsed="49.444173"/>
+</suite>
+<statistics>
+<total>
+<stat pass="18" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="18" fail="0" skip="0">Tests</stat>
+<stat name="02 User Api" id="s1-s1" pass="6" fail="0" skip="0">Tests.02 User Api</stat>
+<stat name="03 Product Api" id="s1-s2" pass="7" fail="0" skip="0">Tests.03 Product Api</stat>
+<stat name="04 Medicine Api" id="s1-s3" pass="5" fail="0" skip="0">Tests.04 Medicine Api</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-06-23T00:04:44.524576" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2026-06-23T00:05:02.897962" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2026-06-23T00:05:17.154934" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+</errors>
+</robot>
