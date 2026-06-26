@@ -78,7 +78,7 @@ pipeline {
             post {
                 always {
                     // ✅ 收集 RF 专用报告
-                    robot outputPath: 'rf_api_tests/results',
+                    robot outputPath: 'rf_api_tests/api_tests/results',
                           reportFileName: 'report.html',
                           logFileName: 'log.html',
                           outputFileName: 'output.xml',
