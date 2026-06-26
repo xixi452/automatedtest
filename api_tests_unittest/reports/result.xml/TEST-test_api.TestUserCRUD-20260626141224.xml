@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_api.TestUserCRUD-20260626141224" tests="10" file="test_api.py" time="89.452" timestamp="2026-06-26T14:16:54" failures="0" errors="0" skipped="0">
+	<testcase classname="test_api.TestUserCRUD" name="test_create_user_all_valid_roles" time="23.052" timestamp="2026-06-26T14:15:48" file="test_api.py" line="268">
+		<!--遍历所有合法角色均可创建-->
+	</testcase>
+	<testcase classname="test_api.TestUserCRUD" name="test_create_user_invalid_role" time="6.637" timestamp="2026-06-26T14:15:55" file="test_api.py" line="263"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_create_user_missing_password" time="6.705" timestamp="2026-06-26T14:16:01" file="test_api.py" line="280"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_create_user_missing_username" time="6.727" timestamp="2026-06-26T14:16:08" file="test_api.py" line="276"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_create_user_success" time="9.258" timestamp="2026-06-26T14:16:17" file="test_api.py" line="256"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_delete_user_success" time="4.606" timestamp="2026-06-26T14:16:22" file="test_api.py" line="308"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_update_user_empty_password_not_changed" time="9.307" timestamp="2026-06-26T14:16:31" file="test_api.py" line="300">
+		<!--空密码不应触发密码修改-->
+	</testcase>
+	<testcase classname="test_api.TestUserCRUD" name="test_update_user_password" time="9.713" timestamp="2026-06-26T14:16:41" file="test_api.py" line="293"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_update_user_role_invalid" time="6.729" timestamp="2026-06-26T14:16:48" file="test_api.py" line="289"/>
+	<testcase classname="test_api.TestUserCRUD" name="test_update_user_role_valid" time="6.717" timestamp="2026-06-26T14:16:54" file="test_api.py" line="284"/>
+</testsuite>

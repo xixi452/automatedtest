@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_api.TestMedicineCRUD-20260626141224" tests="8" file="test_api.py" time="49.488" timestamp="2026-06-26T14:13:36" failures="0" errors="0" skipped="0">
+	<testcase classname="test_api.TestMedicineCRUD" name="test_create_medicine_missing_batch_no" time="6.184" timestamp="2026-06-26T14:12:53" file="test_api.py" line="204"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_create_medicine_missing_expiry_date" time="6.176" timestamp="2026-06-26T14:12:59" file="test_api.py" line="210"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_create_medicine_negative_price" time="6.212" timestamp="2026-06-26T14:13:05" file="test_api.py" line="216"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_create_medicine_negative_stock" time="6.131" timestamp="2026-06-26T14:13:11" file="test_api.py" line="221"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_create_medicine_success" time="8.283" timestamp="2026-06-26T14:13:20" file="test_api.py" line="196"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_delete_medicine_success" time="4.120" timestamp="2026-06-26T14:13:24" file="test_api.py" line="238"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_get_medicine_list_includes_manufacturer" time="6.191" timestamp="2026-06-26T14:13:30" file="test_api.py" line="231"/>
+	<testcase classname="test_api.TestMedicineCRUD" name="test_update_medicine_manufacturer" time="6.191" timestamp="2026-06-26T14:13:36" file="test_api.py" line="226"/>
+</testsuite>

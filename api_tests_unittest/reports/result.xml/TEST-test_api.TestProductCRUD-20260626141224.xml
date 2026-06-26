@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_api.TestProductCRUD-20260626141224" tests="17" file="test_api.py" time="108.920" timestamp="2026-06-26T14:15:25" failures="0" errors="0" skipped="0">
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_empty_body" time="6.202" timestamp="2026-06-26T14:13:42" file="test_api.py" line="121"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_missing_name" time="6.153" timestamp="2026-06-26T14:13:48" file="test_api.py" line="96"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_missing_price" time="6.174" timestamp="2026-06-26T14:13:55" file="test_api.py" line="100"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_negative_price" time="6.110" timestamp="2026-06-26T14:14:01" file="test_api.py" line="104"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_negative_stock" time="6.115" timestamp="2026-06-26T14:14:07" file="test_api.py" line="109"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_success" time="8.298" timestamp="2026-06-26T14:14:15" file="test_api.py" line="88"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_create_product_zero_price" time="8.222" timestamp="2026-06-26T14:14:23" file="test_api.py" line="114">
+		<!--边界值：价格为0应允许-->
+	</testcase>
+	<testcase classname="test_api.TestProductCRUD" name="test_delete_nonexistent_product" time="6.130" timestamp="2026-06-26T14:14:29" file="test_api.py" line="175"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_delete_product_success" time="6.190" timestamp="2026-06-26T14:14:36" file="test_api.py" line="166"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_get_product_detail" time="6.212" timestamp="2026-06-26T14:14:42" file="test_api.py" line="131"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_get_product_list" time="6.171" timestamp="2026-06-26T14:14:48" file="test_api.py" line="126"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_get_product_not_found" time="6.131" timestamp="2026-06-26T14:14:54" file="test_api.py" line="136"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_update_nonexistent_product" time="6.134" timestamp="2026-06-26T14:15:00" file="test_api.py" line="161"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_update_product_negative_price" time="6.225" timestamp="2026-06-26T14:15:06" file="test_api.py" line="146"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_update_product_negative_stock" time="6.120" timestamp="2026-06-26T14:15:13" file="test_api.py" line="150"/>
+	<testcase classname="test_api.TestProductCRUD" name="test_update_product_partial" time="6.179" timestamp="2026-06-26T14:15:19" file="test_api.py" line="154">
+		<!--只更新描述，其他字段不变-->
+	</testcase>
+	<testcase classname="test_api.TestProductCRUD" name="test_update_product_success" time="6.154" timestamp="2026-06-26T14:15:25" file="test_api.py" line="141"/>
+</testsuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_api.TestFrontendServing-20260626141224" tests="2" file="test_api.py" time="4.089" timestamp="2026-06-26T14:12:28" failures="0" errors="0" skipped="0">
+	<testcase classname="test_api.TestFrontendServing" name="test_index_page_accessible" time="2.046" timestamp="2026-06-26T14:12:26" file="test_api.py" line="317"/>
+	<testcase classname="test_api.TestFrontendServing" name="test_spa_fallback_route" time="2.043" timestamp="2026-06-26T14:12:28" file="test_api.py" line="322">
+		<!--SPA 路由回退应返回 index.html-->
+	</testcase>
+</testsuite>

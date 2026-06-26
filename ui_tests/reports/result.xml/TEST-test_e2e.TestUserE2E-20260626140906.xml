@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_e2e.TestUserE2E-20260626140906" tests="6" file="test_e2e.py" time="20.428" timestamp="2026-06-26T14:10:09" failures="0" errors="0" skipped="0">
+	<testcase classname="test_e2e.TestUserE2E" name="test_01_create_user_default_role" time="1.345" timestamp="2026-06-26T14:09:50" file="test_e2e.py" line="401"/>
+	<testcase classname="test_e2e.TestUserE2E" name="test_02_create_user_merchant_role" time="3.092" timestamp="2026-06-26T14:09:53" file="test_e2e.py" line="408"/>
+	<testcase classname="test_e2e.TestUserE2E" name="test_03_edit_user_role_change" time="5.639" timestamp="2026-06-26T14:09:59" file="test_e2e.py" line="415"/>
+	<testcase classname="test_e2e.TestUserE2E" name="test_04_edit_user_password_empty_preserved" time="5.447" timestamp="2026-06-26T14:10:04" file="test_e2e.py" line="443"/>
+	<testcase classname="test_e2e.TestUserE2E" name="test_05_reset_user_form_select_default" time="0.376" timestamp="2026-06-26T14:10:05" file="test_e2e.py" line="467"/>
+	<testcase classname="test_e2e.TestUserE2E" name="test_06_delete_user" time="4.529" timestamp="2026-06-26T14:10:09" file="test_e2e.py" line="475"/>
+</testsuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_e2e.TestProductE2E-20260626140906" tests="6" file="test_e2e.py" time="5.698" timestamp="2026-06-26T14:09:43" failures="0" errors="0" skipped="0">
+	<testcase classname="test_e2e.TestProductE2E" name="test_01_create_product" time="1.461" timestamp="2026-06-26T14:09:38" file="test_e2e.py" line="240"/>
+	<testcase classname="test_e2e.TestProductE2E" name="test_02_create_product_negative_price" time="0.362" timestamp="2026-06-26T14:09:39" file="test_e2e.py" line="252"/>
+	<testcase classname="test_e2e.TestProductE2E" name="test_03_create_product_empty_name" time="0.291" timestamp="2026-06-26T14:09:39" file="test_e2e.py" line="260"/>
+	<testcase classname="test_e2e.TestProductE2E" name="test_04_edit_product" time="1.769" timestamp="2026-06-26T14:09:41" file="test_e2e.py" line="267"/>
+	<testcase classname="test_e2e.TestProductE2E" name="test_05_reset_form" time="0.205" timestamp="2026-06-26T14:09:41" file="test_e2e.py" line="287"/>
+	<testcase classname="test_e2e.TestProductE2E" name="test_06_delete_product" time="1.609" timestamp="2026-06-26T14:09:43" file="test_e2e.py" line="293"/>
+</testsuite>
